@@ -1,0 +1,6 @@
+# lấy thông tin user hiện tại đã đăng nhập
+query Me{
+  me{
+    ...RegularUser 
+  }
+}
