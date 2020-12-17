@@ -110,3 +110,11 @@ export default withUrqlClient(createUrqlClient)(Register)
 // --  ts_rank(tsvector_unaccent_idx, plainto_tsquery('bài viet moi')) DESC
 // --     ,
 // 	ts_rank(document_idx, plainto_tsquery('dung đi')) DESC
+
+/*************** */
+// select * from post where 
+// document_idx @@ to_tsquery('moi:* & ne:* ') 
+// --   or 
+// --   document_idx @@ plainto_tsquery('moi ne') 
+// order by 
+// ts_rank(document_idx, plainto_tsquery('moi ne')) desc
