@@ -16,6 +16,7 @@ export type Query = {
   __typename?: 'Query';
   posts: PaginatedPosts;
   post?: Maybe<Post>;
+  searchPostByTitle?: Maybe<Array<Post>>;
   hello: Scalars['String'];
   me?: Maybe<User>;
   getAllUser: Array<User>;
@@ -32,6 +33,11 @@ export type QueryPostsArgs = {
 
 export type QueryPostArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QuerySearchPostByTitleArgs = {
+  searchString: Scalars['String'];
 };
 
 
@@ -100,7 +106,8 @@ export type MutationCreatePostArgs = {
 
 
 export type MutationUpdatePostArgs = {
-  id: Scalars['Float'];
+  id: Scalars['Int'];
+  text?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
 
@@ -276,6 +283,21 @@ export type RegisterMutation = (
       & RegularUserFragment
     )> }
   ) }
+);
+
+export type UpdatePostMutationVariables = Exact<{
+  id: Scalars['Int'];
+  text?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdatePostMutation = (
+  { __typename?: 'Mutation' }
+  & { updatePost?: Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id' | 'updatedAt' | 'title' | 'text'>
+  )> }
 );
 
 export type VoteMutationVariables = Exact<{
@@ -461,6 +483,20 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const UpdatePostDocument = gql`
+    mutation UpdatePost($id: Int!, $text: String, $title: String) {
+  updatePost(id: $id, text: $text, title: $title) {
+    id
+    updatedAt
+    title
+    text
+  }
+}
+    `;
+
+export function useUpdatePostMutation() {
+  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
 };
 export const VoteDocument = gql`
     mutation Vote($postId: Int!, $value: Int!) {

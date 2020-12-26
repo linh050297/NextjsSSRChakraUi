@@ -13,7 +13,6 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
 
   const router = useRouter();
   let pathName = router.pathname;
-  console.log('pathName:', pathName);
 
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery({ pause: isServer() });

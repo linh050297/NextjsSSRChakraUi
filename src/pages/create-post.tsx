@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Formik, Form } from 'formik';
 import { useCreatePostMutation, useMeQuery } from '../generated/graphql';
-import { toErrorMap } from '../utils/toErrorMap';
 import { InputField } from '../components/InputField';
 import { Box, Button } from '@chakra-ui/core';
 import { withUrqlClient } from 'next-urql';

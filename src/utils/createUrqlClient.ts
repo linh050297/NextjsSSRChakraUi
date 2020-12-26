@@ -1,6 +1,6 @@
 import { isServer } from './isServer';
 import gql from 'graphql-tag';
-import { VoteMutationVariables } from './../generated/graphql';
+import { DeletePostMutationVariables, VoteMutationVariables } from './../generated/graphql';
 import { cursorPagination } from './cursorPagination';
 // import { Query } from 'type-graphql';
 import { fetchExchange, dedupExchange } from '@urql/core';
@@ -92,10 +92,16 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) =>  {
               // fieldKey: "posts({"limit":10})"
               // fieldName: "posts"
               fieldInfos.forEach((fi) => {
+                console.log('fi: ', fi);
                 cache.invalidate('Query', "posts", fi.arguments || {}) //xóa cache posts để query lại lấy all posts
               })
 
             },
+
+            deletePost: (_result, args, cache, info) =>{
+              cache.invalidate({ __typename: 'Post', id: (args as DeletePostMutationVariables ).id });
+            },
+
             logout: (_result, args, cache, info) => {
               betterUpdateQuery<LogoutMutation, MeQuery>(
                 cache,

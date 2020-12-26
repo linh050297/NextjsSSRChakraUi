@@ -42,7 +42,10 @@ const Login: React.FC<{}> = ({...props}) => {
               setErrors(toErrorMap( response.data.login.errors ));
 
             }else if( response.data?.login.user?.id ){
+              // console.log('response.data?.login.user: ', response.data?.login.user);
 
+              // localStorage.setItem('userId' ,JSON.stringify(response.data?.login.user?.id));
+              
               if(typeof router.query.next === 'string'){
                 //sau khi bị redirect do chưa đăng nhập thì sau khi đăng nhập lại thì redirect vè trang cũ
                 router.push(router.query.next);
